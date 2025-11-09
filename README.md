@@ -447,34 +447,6 @@ Significant contributors will be:
 
 ## Roadmap
 
-### Q1 2025
-- ✅ Launch v1.0 with 360+ companies
-- ✅ Industry pages for 11 sectors
-- ✅ Public API with documentation
-- 🚧 Real-time alerts system
-- 🚧 Historical trend analysis (5+ years)
-
-### Q2 2025
-- Expand to 500+ S&P 500 companies
-- Add international companies (UK, EU, APAC)
-- API webhooks for automated monitoring
-- Mobile app (iOS/Android)
-- Premium analytics dashboards
-
-### Q3 2025
-- Integration with ESG/CSR databases
-- Supply chain DEI tracking
-- Board diversity metrics
-- Compensation equity analysis
-- Partnership with advocacy organizations
-
-### Q4 2025
-- AI-powered predictive risk modeling
-- Automated controversy detection
-- Multi-language support
-- Open-source data collection tools
-- Annual "State of Corporate DEI" report
-
 ### Long-Term Vision
 
 MEASURE Labs will expand beyond DEI tracking to become comprehensive infrastructure for corporate accountability:
