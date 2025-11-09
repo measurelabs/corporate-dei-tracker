@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Academic/Linear-inspired minimal palette */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    /* Minimal blue accent (Linear-style) */
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Ultra-subtle secondary */
+    --secondary: 0 0% 98%;
+    --secondary-foreground: 0 0% 9%;
+
+    /* Muted grays for hierarchy */
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Minimal accent */
+    --accent: 0 0% 97%;
+    --accent-foreground: 0 0% 9%;
+
+    /* Clean destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Sharp borders - Linear style */
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+
+    /* Minimal focus ring */
+    --ring: 221 83% 53%;
+
+    /* Minimal radius - Linear/academic style */
+    --radius: 0.25rem;
+  }
+
+  .dark {
+    /* Dark mode - refined monochrome */
+    --background: 0 0% 7%;
+    --foreground: 0 0% 93%;
+
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 93%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 93%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 93%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 93%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+
+    --ring: 221 83% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus improvements */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Fade-only animations (no transforms) */
+  .animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Minimal background gradients */
+  .bg-gradient-subtle {
+    background: linear-gradient(
+      to bottom,
+      hsl(var(--background)),
+      hsl(var(--muted))
+    );
+  }
+}
