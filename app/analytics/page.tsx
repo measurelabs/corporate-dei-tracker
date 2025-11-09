@@ -18,6 +18,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { TrendingUp, Building2, FileText, Target, AlertTriangle, Globe, Award, Eye, ShieldAlert } from 'lucide-react'
+import { formatIndustry } from '@/lib/utils'
 
 // Modern color palette inspired by Linear/Vercel
 const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#f97316']
@@ -106,24 +107,6 @@ export default function AnalyticsPage() {
   }
 
   // Prepare data for charts
-  const allSourceTypeData = Object.entries(overview.source_type_breakdown || {}).map(([name, value]) => ({
-    name: name.replace(/_/g, ' '),
-    value,
-  })).sort((a, b) => b.value - a.value)
-
-  // Keep top 7 sources and group the rest as "Other" for pie chart
-  const topSourceCount = 7
-  const topSources = allSourceTypeData.slice(0, topSourceCount)
-  const otherSources = allSourceTypeData.slice(topSourceCount)
-  const otherTotal = otherSources.reduce((sum, item) => sum + item.value, 0)
-
-  const sourceTypeData = otherTotal > 0
-    ? [...topSources, { name: 'Other', value: otherTotal }]
-    : topSources
-
-  // Keep top 15 for bar chart (can display more data than pie)
-  const sourceTypeDataBar = allSourceTypeData.slice(0, 15)
-
   const commitmentStatusData = Object.entries(overview.commitment_status_breakdown || {}).map(([name, value]) => ({
     name: name.replace(/_/g, ' '),
     value,
@@ -152,7 +135,10 @@ export default function AnalyticsPage() {
     value: Number(value),
   }))
 
-  const topIndustries = industries.slice(0, 10)
+  const topIndustries = industries.slice(0, 10).map(ind => ({
+    ...ind,
+    industry: formatIndustry(ind.industry)
+  }))
 
   // Prepare industry data for pie chart (top 8 industries + Other)
   const topIndustryCount = 8
@@ -161,8 +147,8 @@ export default function AnalyticsPage() {
   const otherIndustryTotal = otherIndustries.reduce((sum, item) => sum + item.company_count, 0)
 
   const industryPieData = otherIndustryTotal > 0
-    ? [...topIndustriesForPie.map(ind => ({ name: ind.industry, value: ind.company_count })), { name: 'Other', value: otherIndustryTotal }]
-    : topIndustriesForPie.map(ind => ({ name: ind.industry, value: ind.company_count }))
+    ? [...topIndustriesForPie.map(ind => ({ name: formatIndustry(ind.industry), value: ind.company_count })), { name: 'Other', value: otherIndustryTotal }]
+    : topIndustriesForPie.map(ind => ({ name: formatIndustry(ind.industry), value: ind.company_count }))
 
   return (
     <div className="min-h-screen">
@@ -253,11 +239,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Charts */}
-        <Tabs defaultValue="sources" className="space-y-6">
+        <Tabs defaultValue="commitments" className="space-y-6">
           <TabsList className="inline-flex h-auto p-1 bg-muted border border-border rounded-md flex-wrap">
-            <TabsTrigger value="sources" className="rounded px-3 py-1.5 text-sm font-medium data-[state=active]:bg-background">
-              Source Types
-            </TabsTrigger>
             <TabsTrigger value="commitments" className="rounded px-3 py-1.5 text-sm font-medium data-[state=active]:bg-background">
               Commitment Status
             </TabsTrigger>
@@ -277,91 +260,6 @@ export default function AnalyticsPage() {
               By Industry
             </TabsTrigger>
           </TabsList>
-
-          <TabsContent value="sources" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border-border bg-card">
-                <CardHeader className="space-y-1 pb-4">
-                  <CardTitle className="text-base font-semibold">Source Type Distribution</CardTitle>
-                  <CardDescription className="text-xs">Breakdown of data sources by type</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={320}>
-                    <PieChart>
-                      <Pie
-                        data={sourceTypeData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        dataKey="value"
-                        strokeWidth={0}
-                        paddingAngle={2}
-                      >
-                        {sourceTypeData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: 'hsl(var(--background))',
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '6px',
-                          fontSize: '12px',
-                          padding: '8px 12px'
-                        }}
-                        formatter={(value: number) => [value.toLocaleString(), 'Count']}
-                      />
-                      <Legend
-                        verticalAlign="bottom"
-                        height={36}
-                        iconType="circle"
-                        iconSize={8}
-                        wrapperStyle={{
-                          fontSize: '12px',
-                          paddingTop: '16px'
-                        }}
-                        formatter={(value) => <span className="text-xs text-muted-foreground">{value}</span>}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-
-              <Card className="border-border bg-card">
-                <CardHeader className="space-y-1 pb-4">
-                  <CardTitle className="text-base font-semibold text-foreground">Source Types by Count</CardTitle>
-                  <CardDescription className="text-xs text-muted-foreground">Number of sources in each category</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={320}>
-                    <BarChart data={sourceTypeDataBar}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-                      <XAxis
-                        dataKey="name"
-                        angle={-45}
-                        textAnchor="end"
-                        height={100}
-                        tick={{ fill: 'rgb(100, 116, 139)', fontSize: 12 }}
-                      />
-                      <YAxis tick={{ fill: 'rgb(100, 116, 139)', fontSize: 12 }} />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                          border: '1px solid rgba(226, 232, 240, 0.5)',
-                          borderRadius: '8px',
-                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                        }}
-                        cursor={{ fill: 'rgba(99, 102, 241, 0.1)' }}
-                      />
-                      <Bar dataKey="value" fill={CHART_COLORS.primary} radius={[8, 8, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
 
           <TabsContent value="commitments" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -920,7 +818,7 @@ export default function AnalyticsPage() {
                       key={index}
                       className="border-b border-border hover:bg-muted/30 transition-colors"
                     >
-                      <td className="p-3 font-medium text-foreground text-sm">{industry.industry}</td>
+                      <td className="p-3 font-medium text-foreground text-sm">{formatIndustry(industry.industry)}</td>
                       <td className="text-right p-3 tabular-nums text-sm">{industry.company_count}</td>
                       <td className="text-right p-3 tabular-nums text-sm">{industry.avg_sources.toFixed(1)}</td>
                       <td className="text-right p-3 tabular-nums text-sm">{industry.total_commitments}</td>
