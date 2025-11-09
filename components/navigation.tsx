@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Building2, TrendingUp, Search, BarChart3, Menu, X, ExternalLink, Award, ShieldAlert, Briefcase, ChevronDown } from 'lucide-react'
+import { Building2, TrendingUp, Search, BarChart3, Menu, X, ExternalLink, Award, ShieldAlert, Briefcase, ChevronDown, Newspaper } from 'lucide-react'
 import { cn, formatIndustry } from '@/lib/utils'
 import { api, IndustryStats } from '@/lib/api'
 import { CommandMenu } from './command-menu'
@@ -33,6 +33,11 @@ const navItems = [
     title: 'Analytics',
     href: '/analytics',
     icon: TrendingUp,
+  },
+  {
+    title: 'News',
+    href: '/news',
+    icon: Newspaper,
   },
 ]
 
@@ -248,10 +253,10 @@ export function Navigation() {
               </Link>
 
               <Link
-                href="/dev"
+                href="/contribute"
                 className="hidden md:flex items-center px-3 py-1.5 rounded text-xs font-medium bg-primary text-primary-foreground hover:opacity-90 transition-colors duration-150"
               >
-                <span>Dev</span>
+                <span>Contribute</span>
               </Link>
 
               <Link
