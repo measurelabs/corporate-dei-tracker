@@ -5,7 +5,7 @@
 MEASURE Labs is an AI-powered intelligence platform that tracks corporate diversity, equity, and inclusion (DEI) commitments, controversies, and changes over time. We transform scattered information into verified, searchable data—empowering consumers, investors, advocates, journalists, and job seekers to make informed, values-aligned decisions.
 
 🔗 **Live Platform**: [measurelabs.org](https://measurelabs.org)  
-📊 **API Docs**: [measurelabs.org/api-docs](https://measurelabs.org/api-docs)  
+📊 **API Docs**: [measurelabs.org/api-docs](https://measurelabs.org/docs)  
 📧 **Contact**: contribute@measurelabs.org
 
 ---
