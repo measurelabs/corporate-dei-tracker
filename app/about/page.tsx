@@ -134,14 +134,14 @@ export default function AboutPage() {
                 MEASURE Labs tracks corporate DEI stances, commitments, and changes over time—transforming scattered information into verified intelligence that anyone can access.
               </p>
 
-              {/* Dev, API Docs, and Methodology Buttons */}
+              {/* Contribute, API Docs, and Methodology Buttons */}
               <div className="flex flex-wrap justify-center gap-3 mt-6">
                 <Link
-                  href="/dev"
+                  href="/contribute"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 dark:bg-violet-700 hover:opacity-90 text-white rounded-lg text-sm font-medium transition-colors"
                 >
                   <Code className="h-4 w-4" />
-                  Dev
+                  Contribute
                 </Link>
                 <a
                   href={`${process.env.NEXT_PUBLIC_API_URL}/docs`}
