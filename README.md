@@ -1,4 +1,4 @@
-# MEASURE Labs
+# MEASURE Labs' Corporate DEI Tracker
 
 **Making Corporate Accountability Transparent and Accessible**
 
