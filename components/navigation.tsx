@@ -356,11 +356,11 @@ export function Navigation() {
               <span>About</span>
             </Link>
             <Link
-              href="/dev"
+              href="/contribute"
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-3 px-4 py-3 rounded text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-150 sm:hidden"
             >
-              <span>Dev</span>
+              <span>Contribute</span>
             </Link>
             <Link
               href="/docs"
