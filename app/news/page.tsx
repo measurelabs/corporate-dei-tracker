@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { client, SanityArticle, articlesQuery, featuredArticlesQuery, urlFor } from '@/lib/sanity'
 import { formatDistanceToNow } from 'date-fns'
 import { Newspaper, TrendingUp, Calendar, User, ArrowRight } from 'lucide-react'
@@ -118,7 +117,7 @@ export default function NewsPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-6xl">
 
         {/* Featured Articles */}
         {!loading && featuredArticles.length > 0 && (
