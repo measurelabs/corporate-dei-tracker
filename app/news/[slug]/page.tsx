@@ -287,8 +287,8 @@ export default function ArticlePage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
 
         {/* Hero Content */}
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-10 sm:pb-12">
-          <div className="max-w-5xl">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
+          <div className="max-w-7xl">
             {/* Back Button */}
             <Link href="/news">
               <Button variant="ghost" className="mb-4 group -ml-3">
@@ -297,76 +297,73 @@ export default function ArticlePage() {
               </Button>
             </Link>
 
-            {/* Category & Tags */}
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Badge variant={getCategoryColor(article.category) as any}>
-                {categories.find((c) => c.value === article.category)?.label || article.category}
-              </Badge>
-              {article.tags?.map((tag) => (
-                <Badge key={tag} variant="outline" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-              {article.featured && (
-                <Badge variant="outline" className="text-xs">
-                  Featured
-                </Badge>
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Left Column - Text Content */}
+              <div>
+                {/* Category & Tags */}
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <Badge variant={getCategoryColor(article.category) as any}>
+                    {categories.find((c) => c.value === article.category)?.label || article.category}
+                  </Badge>
+                  {article.tags?.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                  {article.featured && (
+                    <Badge variant="outline" className="text-xs">
+                      Featured
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-2 sm:mb-3 text-gray-900 dark:text-gray-100">
+                  {article.title}
+                </h1>
+
+                {/* Excerpt */}
+                <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-4 sm:mb-6">
+                  {article.excerpt}
+                </p>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    <time dateTime={article.publishedAt}>
+                      {format(new Date(article.publishedAt), 'MMMM d, yyyy')}
+                    </time>
+                  </div>
+                  <Separator orientation="vertical" className="h-4" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleShare}
+                    className="gap-2 -ml-2"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    Share
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right Column - Hero Image */}
+              {article.mainImage && (
+                <div className="relative h-64 sm:h-80 lg:h-96 w-full rounded-lg overflow-hidden border border-border shadow-lg">
+                  <Image
+                    src={urlFor(article.mainImage).width(1400).height(800).url()}
+                    alt={article.mainImage.alt || article.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               )}
-            </div>
-
-            {/* Title */}
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-2 sm:mb-3 text-gray-900 dark:text-gray-100">
-              {article.title}
-            </h1>
-
-            {/* Excerpt */}
-            <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-4 sm:mb-6">
-              {article.excerpt}
-            </p>
-
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>{article.author}</span>
-              </div>
-              <Separator orientation="vertical" className="h-4" />
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <time dateTime={article.publishedAt}>
-                  {format(new Date(article.publishedAt), 'MMMM d, yyyy')}
-                </time>
-              </div>
-              <div className="ml-auto">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleShare}
-                  className="gap-2"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </Button>
-              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Main Image */}
-      {article.mainImage && (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-6 mb-8 max-w-7xl">
-          <div className="relative h-80 sm:h-80 md:h-96 w-full rounded-lg overflow-hidden border border-border shadow-lg">
-            <Image
-              src={urlFor(article.mainImage).width(1400).height(800).url()}
-              alt={article.mainImage.alt || article.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        </div>
-      )}
 
       {/* Content Section */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl">
