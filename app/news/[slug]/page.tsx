@@ -7,15 +7,16 @@ import Link from 'next/link'
 import { ArticleContent } from './ArticleContent'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // Generate metadata for the article page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
-    const article = await client.fetch<SanityArticle>(articleBySlugQuery(params.slug))
+    const { slug } = await params
+    const article = await client.fetch<SanityArticle>(articleBySlugQuery(slug))
 
     if (!article) {
       return {
@@ -60,11 +61,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArticlePage({ params }: PageProps) {
+  const { slug } = await params
   let article: SanityArticle | null = null
   let loading = false
 
   try {
-    article = await client.fetch<SanityArticle>(articleBySlugQuery(params.slug))
+    article = await client.fetch<SanityArticle>(articleBySlugQuery(slug))
   } catch (err) {
     console.error('Failed to load article:', err)
   }
