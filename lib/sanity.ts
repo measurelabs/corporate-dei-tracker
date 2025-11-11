@@ -37,6 +37,8 @@ export interface SanityArticle {
   tags?: string[]
   publishedAt: string
   excerpt: string
+  metaTitle?: string
+  metaDescription?: string
   body: any[]
   featured?: boolean
   relatedCompanies?: string[]
@@ -87,6 +89,8 @@ export const articleBySlugQuery = (slug: string) => `*[_type == "article" && slu
   tags,
   publishedAt,
   excerpt,
+  metaTitle,
+  metaDescription,
   body,
   featured,
   relatedCompanies

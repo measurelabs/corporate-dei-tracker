@@ -84,6 +84,21 @@ export default defineType({
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
+      name: 'metaTitle',
+      title: 'Meta Title',
+      type: 'string',
+      description: 'SEO title (50-60 characters recommended). Defaults to article title if not provided.',
+      validation: (Rule) => Rule.max(60),
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
+      rows: 3,
+      description: 'SEO description (150-160 characters recommended). Defaults to excerpt if not provided.',
+      validation: (Rule) => Rule.max(160),
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
