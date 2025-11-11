@@ -131,6 +131,19 @@ export default function ArticlePage() {
     }
   }, [headings])
 
+  // Auto-scroll TOC to keep active section visible
+  useEffect(() => {
+    if (!activeSection) return
+
+    const tocButton = document.querySelector(`button[data-toc-id="${activeSection}"]`)
+    if (tocButton) {
+      tocButton.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    }
+  }, [activeSection])
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -174,6 +187,26 @@ export default function ArticlePage() {
         <blockquote className="border-l-4 border-violet-600 dark:border-violet-400 pl-4 italic my-6 text-muted-foreground bg-muted/50 py-3 rounded-r">
           {children}
         </blockquote>
+      ),
+    },
+    list: {
+      bullet: ({ children }: any) => (
+        <ul className="list-disc list-outside ml-6 mb-4 space-y-2 text-sm text-muted-foreground">
+          {children}
+        </ul>
+      ),
+      number: ({ children }: any) => (
+        <ol className="list-decimal list-outside ml-6 mb-4 space-y-2 text-sm text-muted-foreground">
+          {children}
+        </ol>
+      ),
+    },
+    listItem: {
+      bullet: ({ children }: any) => (
+        <li className="leading-7 pl-1">{children}</li>
+      ),
+      number: ({ children }: any) => (
+        <li className="leading-7 pl-1">{children}</li>
       ),
     },
     marks: {
@@ -231,7 +264,7 @@ export default function ArticlePage() {
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-blue-50 dark:from-violet-950/20 dark:via-background dark:to-blue-950/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
           <div className="flex gap-8">
-            <div className="hidden lg:block w-56 shrink-0">
+            <div className="hidden lg:block w-64 shrink-0">
               <div className="sticky top-20 space-y-2 animate-pulse">
                 <div className="h-4 bg-muted rounded w-3/4" />
                 <div className="h-3 bg-muted rounded w-full" />
@@ -366,35 +399,38 @@ export default function ArticlePage() {
       </div>
 
       {/* Content Section */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
         <div className="flex gap-8 justify-center">
           {/* Table of Contents - Desktop Only */}
           {headings.length > 0 && (
-            <aside className="hidden lg:block w-48 shrink-0">
-              <div className="sticky top-20 space-y-0.5">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <FileText className="w-3 h-3 text-muted-foreground" />
-                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+            <aside className="hidden lg:block w-64 shrink-0">
+              <div className="sticky top-20 max-h-[calc(100vh-6rem)] flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <FileText className="w-4 h-4 text-muted-foreground" />
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     On This Page
                   </p>
                 </div>
-                {headings.map(({ id, text, level }) => (
-                  <button
-                    key={id}
-                    onClick={() => scrollToSection(id)}
-                    className={cn(
-                      'block w-full text-left py-1 rounded transition-colors',
-                      level === 2 && 'pl-2 text-xs',
-                      level === 3 && 'pl-4 text-[11px]',
-                      level === 4 && 'pl-6 text-[10px]',
-                      activeSection === id
-                        ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-900 dark:text-violet-300 font-medium'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    )}
-                  >
-                    {text}
-                  </button>
-                ))}
+                <div className="overflow-y-auto space-y-1 pr-2 hide-scrollbar">
+                  {headings.map(({ id, text, level }) => (
+                    <button
+                      key={id}
+                      data-toc-id={id}
+                      onClick={() => scrollToSection(id)}
+                      className={cn(
+                        'block w-full text-left py-1.5 px-2 rounded transition-colors',
+                        level === 2 && 'pl-2 text-sm',
+                        level === 3 && 'pl-4 text-sm',
+                        level === 4 && 'pl-6 text-xs',
+                        activeSection === id
+                          ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-900 dark:text-violet-300 font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      )}
+                    >
+                      {text}
+                    </button>
+                  ))}
+                </div>
               </div>
             </aside>
           )}
