@@ -57,7 +57,6 @@ export default function LandingPage() {
   const [isDeleting, setIsDeleting] = useState(false)
   const [featuredProfiles, setFeaturedProfiles] = useState<FullProfile[]>([])
   const [loading, setLoading] = useState(true)
-  const [stats, setStats] = useState<AnalyticsOverview | null>(null)
 
   // Typewriter effect
   useEffect(() => {
@@ -91,13 +90,11 @@ export default function LandingPage() {
   // Load featured companies with full profile data
   useEffect(() => {
     loadFeaturedProfiles()
-    loadStats()
   }, [])
 
   const loadStats = async () => {
     try {
       const analytics = await api.getAnalyticsOverview()
-      setStats(analytics)
     } catch (error) {
       console.error('Failed to load analytics:', error)
     }
@@ -160,7 +157,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Gradient Background */}
@@ -168,7 +165,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
 
         {/* Hero Content */}
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-20 md:pb-24">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 pb-0">
           <div className="max-w-5xl mx-auto">
             {/* Hero Text */}
             <div className="text-center mb-10 sm:mb-12">
@@ -221,14 +218,14 @@ export default function LandingPage() {
                 }
               `}</style>
 
-              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-4 max-w-2xl mx-auto px-4 sm:px-0">
                 Monitor which companies are advancing equity—and which are scaling back.
               </p>
 
               {/* Search Bar with Autocomplete */}
               <SearchAutocomplete
                 placeholder={`Search ${typewriterText}...`}
-                className="max-w-2xl mx-auto mb-6 px-4 sm:px-0"
+                className="max-w-2xl mx-auto mb-4 px-4 sm:px-0"
               />
 
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 px-4">
@@ -355,45 +352,13 @@ export default function LandingPage() {
                 </div>
               )}
 
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 mb-12">
                 <Link href="/companies">
                   <Button size="default" variant="outline" className="rounded-md px-6">
                     View All Companies
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats Section */}
-      <div className="bg-gray-50 dark:bg-gray-900/50 border-y border-gray-200 dark:border-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
-            <div>
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
-                {stats ? stats.total_companies.toLocaleString() : '500+'}
-              </div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                Companies Tracked
-              </div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
-                {stats ? stats.total_commitments.toLocaleString() : '10K+'}
-              </div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                DEI Commitments
-              </div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
-                {stats ? stats.total_sources.toLocaleString() : 'Daily'}
-              </div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                {stats ? 'Data Sources' : 'Updates'}
               </div>
             </div>
           </div>

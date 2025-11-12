@@ -162,7 +162,7 @@ export default function IndustriesOverview() {
             </p>
 
             {/* Global Stats Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-800">
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
                   <Building2 className="h-4 w-4" />
@@ -180,16 +180,6 @@ export default function IndustriesOverview() {
                 </div>
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {totals.commitments}
-                </p>
-              </div>
-
-              <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-800">
-                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
-                  <TrendingUp className="h-4 w-4" />
-                  <span className="text-xs font-medium uppercase tracking-wide">Active</span>
-                </div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {totals.activeCommitments}
                 </p>
               </div>
 
@@ -243,7 +233,6 @@ export default function IndustriesOverview() {
               {industryStats.map((industry, index) => {
                 const slug = getIndustrySlug(industry.industry)
                 const gradient = getIndustryColor(industry.industry)
-                const icon = industryIcons[slug] || '🏢'
                 const cdoPercent = industry.company_count > 0
                   ? Math.round((industry.companies_with_cdo / industry.company_count) * 100)
                   : 0
@@ -264,18 +253,15 @@ export default function IndustriesOverview() {
                     <div className={`h-2 bg-gradient-to-r ${gradient}`} />
 
                     <div className="p-6">
-                      {/* Industry Name with Icon */}
+                      {/* Industry Name */}
                       <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl">{icon}</span>
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                              {formatIndustry(industry.industry)}
-                            </h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {industry.company_count} companies
-                            </p>
-                          </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            {formatIndustry(industry.industry)}
+                          </h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {industry.company_count} companies
+                          </p>
                         </div>
                         <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all group-hover:translate-x-1" />
                       </div>
@@ -420,8 +406,8 @@ export default function IndustriesOverview() {
                   <div className="group bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold text-lg">
-                          ⚠️
+                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                          <BarChart3 className="h-6 w-6 text-white" />
                         </div>
                       </div>
                       <div>
