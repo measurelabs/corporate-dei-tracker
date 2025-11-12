@@ -58,7 +58,7 @@ function CompaniesContent() {
       // For table view, reset and load first page
       setPage(1)
       setCompanies([])
-      loadCompanies(1, true)
+      loadCompanies(1)
     } else {
       // For grid/list, load current page
       loadCompanies()
@@ -90,7 +90,7 @@ function CompaniesContent() {
     }
   }
 
-  const loadCompanies = async (pageToLoad?: number, resetList = false) => {
+  const loadCompanies = async (pageToLoad?: number) => {
     try {
       const isLoadingMore = pageToLoad && pageToLoad > 1
 
@@ -169,11 +169,16 @@ function CompaniesContent() {
               bVal = b.name || ''
           }
 
-          if (typeof aVal === 'string') {
+          if (typeof aVal === 'string' && typeof bVal === 'string') {
             const comparison = aVal.localeCompare(bVal)
             return order === 'desc' ? -comparison : comparison
-          } else {
+          } else if (typeof aVal === 'number' && typeof bVal === 'number') {
             return order === 'desc' ? bVal - aVal : aVal - bVal
+          } else {
+            // Handle null/undefined values
+            if (aVal === null || aVal === undefined) return 1
+            if (bVal === null || bVal === undefined) return -1
+            return 0
           }
         })
       }
@@ -218,7 +223,7 @@ function CompaniesContent() {
     if (page < totalPages && !loadingMore) {
       const nextPage = page + 1
       setPage(nextPage)
-      loadCompanies(nextPage, false)
+      loadCompanies(nextPage)
     }
   }
 
