@@ -11,11 +11,13 @@ import {
 
 // Map industry names to slugs
 function getIndustrySlug(industry: string): string {
+  if (!industry) return ''
   return industry.toLowerCase().replace(/[\s&]+/g, '-').replace(/[^\w-]/g, '')
 }
 
 // Get industry color based on name
 function getIndustryColor(industryName: string): string {
+  if (!industryName) return 'from-gray-600 to-slate-600'
   const normalizedName = industryName.toLowerCase().trim()
   console.log(`[COLOR MATCH] Checking industry: "${industryName}" -> normalized: "${normalizedName}"`)
 

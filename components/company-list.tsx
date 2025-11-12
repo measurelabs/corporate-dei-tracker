@@ -55,7 +55,7 @@ export function CompanyList({ companies }: CompanyListProps) {
                   variant={getRiskLevelColor(company.risk_level) as any}
                   className="text-xs hidden md:inline-flex"
                 >
-                  {company.risk_level.charAt(0).toUpperCase() + company.risk_level.slice(1).toLowerCase()}
+                  {company.risk_level?.charAt(0).toUpperCase() + company.risk_level?.slice(1).toLowerCase()}
                 </Badge>
               )}
 
@@ -65,7 +65,7 @@ export function CompanyList({ companies }: CompanyListProps) {
                   variant={getRecommendationColor(company.recommendation) as any}
                   className="text-xs"
                 >
-                  {company.recommendation.charAt(0).toUpperCase() + company.recommendation.slice(1).toLowerCase()}
+                  {company.recommendation?.charAt(0).toUpperCase() + company.recommendation?.slice(1).toLowerCase()}
                 </Badge>
               )}
 

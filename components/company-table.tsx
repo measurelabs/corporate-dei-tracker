@@ -110,7 +110,7 @@ export function CompanyTable({ companies, hasMore, onLoadMore, isLoading }: Comp
                       variant={getRiskLevelColor(company.risk_level) as any}
                       className="text-xs"
                     >
-                      {company.risk_level.charAt(0).toUpperCase() + company.risk_level.slice(1).toLowerCase()}
+                      {company.risk_level?.charAt(0).toUpperCase() + company.risk_level?.slice(1).toLowerCase()}
                     </Badge>
                   ) : (
                     <span className="text-xs text-muted-foreground">—</span>
@@ -122,7 +122,7 @@ export function CompanyTable({ companies, hasMore, onLoadMore, isLoading }: Comp
                       variant={getRecommendationColor(company.recommendation) as any}
                       className="text-xs"
                     >
-                      {company.recommendation.charAt(0).toUpperCase() + company.recommendation.slice(1).toLowerCase()}
+                      {company.recommendation?.charAt(0).toUpperCase() + company.recommendation?.slice(1).toLowerCase()}
                     </Badge>
                   ) : (
                     <span className="text-xs text-muted-foreground">—</span>

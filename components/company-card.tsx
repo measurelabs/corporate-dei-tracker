@@ -24,7 +24,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
                   variant={getRecommendationColor(company.recommendation) as any}
                   className="text-xs font-semibold shrink-0"
                 >
-                  {company.recommendation.charAt(0).toUpperCase() + company.recommendation.slice(1).toLowerCase()}
+                  {company.recommendation?.charAt(0).toUpperCase() + company.recommendation?.slice(1).toLowerCase()}
                 </Badge>
               )}
             </div>
@@ -55,7 +55,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
               variant={getRiskLevelColor(company.risk_level) as any}
               className="text-xs"
             >
-              {company.risk_level.charAt(0).toUpperCase() + company.risk_level.slice(1).toLowerCase()} Risk
+              {company.risk_level?.charAt(0).toUpperCase() + company.risk_level?.slice(1).toLowerCase()} Risk
             </Badge>
           )}
 
