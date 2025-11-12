@@ -43,6 +43,7 @@ const navItems = [
 
 // Helper function to get slug from industry name
 function getIndustrySlug(industry: string): string {
+  if (!industry) return ''
   return industry.toLowerCase()
     .replace(/[\s&]+/g, '-')
     .replace(/[^\w-]/g, '')
