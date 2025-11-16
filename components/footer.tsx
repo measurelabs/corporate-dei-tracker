@@ -7,7 +7,12 @@ import { Building2, TrendingUp, Award, ShieldAlert, Briefcase, ChevronRight } fr
 import { formatIndustry } from '@/lib/utils'
 
 // Helper function to get slug from industry name
-function getIndustrySlug(industry: string): string {
+function getIndustrySlug(industry: string | null | undefined): string {
+  // Handle null or undefined industry values
+  if (!industry) {
+    return 'unknown'
+  }
+
   return industry.toLowerCase()
     .replace(/[\s&]+/g, '-')
     .replace(/[^\w-]/g, '')
@@ -143,20 +148,22 @@ export function Footer() {
             ) : (
               <div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2">
-                  {industries.map((industry) => (
-                    <Link
-                      key={industry.industry}
-                      href={`/industries/${getIndustrySlug(industry.industry)}`}
-                      className="group flex items-center justify-between text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-                    >
-                      <span className="truncate">
-                        {formatIndustry(industry.industry)}
-                      </span>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-600 ml-1">
-                        ({industry.company_count})
-                      </span>
-                    </Link>
-                  ))}
+                  {industries
+                    .filter((industry) => industry.industry) // Skip entries with null/undefined industry names
+                    .map((industry) => (
+                      <Link
+                        key={industry.industry}
+                        href={`/industries/${getIndustrySlug(industry.industry)}`}
+                        className="group flex items-center justify-between text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+                      >
+                        <span className="truncate">
+                          {formatIndustry(industry.industry)}
+                        </span>
+                        <span className="text-[10px] text-gray-500 dark:text-gray-600 ml-1">
+                          ({industry.company_count})
+                        </span>
+                      </Link>
+                    ))}
                 </div>
                 {industries.length > 0 && (
                   <Link

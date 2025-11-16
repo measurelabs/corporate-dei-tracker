@@ -113,8 +113,17 @@ export default function LandingPage() {
           // Pick 3 random from the at-risk list
           const shuffled = atRiskResponse.sort(() => 0.5 - Math.random())
           const selected = shuffled.slice(0, 3)
-          console.log('Selected profiles:', selected)
-          setFeaturedProfiles(selected)
+
+          // Ensure each profile has the required fields
+          const validProfiles = selected.map((profile, index) => ({
+            ...profile,
+            // Ensure we have an id and company_id
+            id: profile.id || `at-risk-${index}`,
+            company_id: profile.company_id || profile.company?.id || profile.id
+          }))
+
+          console.log('Selected profiles:', validProfiles)
+          setFeaturedProfiles(validProfiles)
           return
         }
       } catch (err) {
